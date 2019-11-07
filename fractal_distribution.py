@@ -15,4 +15,4 @@ def gen(frac, n):
 if __name__ == '__main__':
     out = gen(0.3, 70002)
     print(out)
-    print('size = {}'.format(out.size))
+    print('size = {}'.format(out.size))  # size should be 100000
