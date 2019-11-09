@@ -51,3 +51,4 @@ INTO OUTFILE "query_d.csv"
 FIELDS TERMINATED BY ","
 
 <q>\\</q>
+
