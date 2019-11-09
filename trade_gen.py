@@ -8,14 +8,14 @@ import os
 COLUMN_NAMES = ['stocksymbol', 'time', 'quantity', 'price']
 FILE_PATH = 'trade.csv'
 
-# NUM_RECORDS = 10000000
-# NUM_STOCKSYMBOLS = 100000
-# X = 70002
+NUM_RECORDS = 10000000
+NUM_STOCKSYMBOLS = 100000
+X = 70002
 
 # test
-NUM_RECORDS = 10000
-NUM_STOCKSYMBOLS = 1000
-X = 703
+# NUM_RECORDS = 10000
+# NUM_STOCKSYMBOLS = 1000
+# X = 703
 
 
 def gen(frac, n):
