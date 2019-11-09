@@ -1,10 +1,12 @@
 <q>
 
+/ Translate AQuery to q code:
 / java -jar aquery.jar -a 1 -c -o trade_query.q trade_query.a
-/ or
+/ or:
 / a2q -a 1 -c -o trade_query.q trade_query.a
 
-/ q trade_query.q
+/ Run and time the queries:
+/ time q trade_query.q
 
 </q>
 
