@@ -1,0 +1,49 @@
+<q>
+
+/ java -jar aquery.jar -a 1 -c -o trade_query.q trade_query.a
+/ or
+/ a2q -a 1 -c -o trade_query.q trade_query.a
+
+/ q trade_query.q
+
+</q>
+
+
+CREATE TABLE trade (stocksymbol INT, time INT, quantity INT, price INT)
+
+LOAD DATA INFILE "trade.csv"
+INTO TABLE trade
+FIELDS TERMINATED BY ","
+
+SELECT stocksymbol, sum(quantity * price) / sum(quantity) as weighted_average
+FROM trade
+GROUP BY stocksymbol
+INTO OUTFILE "query_a.csv"
+FIELDS TERMINATED BY ","
+
+WITH nested(stocksymbol, unweighted_moving_averages) AS (
+ SELECT stocksymbol, avgs(10, price) as unweighted_moving_averages
+ FROM trade
+ ASSUMING ASC time
+ GROUP BY stocksymbol
+)
+SELECT * FROM flatten(nested)
+INTO OUTFILE "query_b.csv"
+FIELDS TERMINATED BY ","
+
+WITH nested(stocksymbol, weighted_moving_averages) AS (
+ SELECT stocksymbol, avgs(10, price*quantity) / avgs(10, quantity) as weighted_moving_averages
+ FROM trade
+ ASSUMING ASC time
+ GROUP BY stocksymbol
+)
+SELECT * FROM flatten(nested)
+INTO OUTFILE "query_c.csv"
+FIELDS TERMINATED BY ","
+
+SELECT stocksymbol, max(price - mins(price)) as best_profit
+FROM trade
+ASSUMING ASC time
+GROUP BY stocksymbol
+INTO OUTFILE "query_d.csv"
+FIELDS TERMINATED BY ","
