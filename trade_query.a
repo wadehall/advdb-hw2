@@ -49,3 +49,5 @@ ASSUMING ASC time
 GROUP BY stocksymbol
 INTO OUTFILE "query_d.csv"
 FIELDS TERMINATED BY ","
+
+<q>\\</q>
