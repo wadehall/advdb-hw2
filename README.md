@@ -20,12 +20,37 @@ and put it in the same directory (`q1/`)
     a2q -a 1 -c -o trade_query.q trade_query.a
     ```
   This will generate `trade_query.q`.
-- Run and time the queries:
+- Run the queries:
     ```bash
-    time q trade_query.q
+    q trade_query.q
     ```
-- The outputs will go to `query_a.csv`, `query_b.csv`, `query_c.csv`,
-  and `query_d.csv`.
+  You will get the following output in kdb+:
+    ```
+    `trade
+    `trade
+    `query_a
+    `query_b
+    `query_c
+    `query_d
+    q)
+    ```
+  Results of the four queries are stored in tables `` `query_a``, 
+`` `query_b``, `` `query_c``, and `` `query_d``, respectively.
+  
+  The prompt `q)` in the end means you are still in a q console session.
+
+- Type the name of each table to show its content:
+    ```
+    q)query_a
+    ...
+    q)query_b
+    ...
+    q)query_c
+    ...
+    q)query_d
+    ...
+    ```
+  
   
 ## Question 3
 ### Run the query

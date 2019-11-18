@@ -1,15 +1,18 @@
 <q>
-
 / Translate AQuery to q code:
 / java -jar aquery.jar -a 1 -c -o trade_query.q trade_query.a
 / or:
 / a2q -a 1 -c -o trade_query.q trade_query.a
 
-/ Run and time the queries:
-/ time q trade_query.q
+/ Run the queries:
+/ q trade_query.q
 
+/ To view the result tables, in kdb+:
+/ q)query_a
+/ q)query_b
+/ q)query_c
+/ q)query_d
 </q>
-
 
 CREATE TABLE trade (stocksymbol INT, time INT, quantity INT, price INT)
 
@@ -17,38 +20,28 @@ LOAD DATA INFILE "trade.csv"
 INTO TABLE trade
 FIELDS TERMINATED BY ","
 
-SELECT stocksymbol, sum(quantity * price) / sum(quantity) as weighted_average
-FROM trade
-GROUP BY stocksymbol
-INTO OUTFILE "query_a.csv"
-FIELDS TERMINATED BY ","
+CREATE TABLE query_a AS
+    SELECT stocksymbol, sum(quantity * price) / sum(quantity) as weighted_average
+    FROM trade
+    GROUP BY stocksymbol
 
-WITH nested(stocksymbol, unweighted_moving_averages) AS (
- SELECT stocksymbol, avgs(10, price) as unweighted_moving_averages
- FROM trade
- ASSUMING ASC time
- GROUP BY stocksymbol
-)
-SELECT * FROM flatten(nested)
-INTO OUTFILE "query_b.csv"
-FIELDS TERMINATED BY ","
+CREATE TABLE query_b AS
+    SELECT stocksymbol, avgs(10, price) as unweighted_moving_averages
+    FROM trade
+    ASSUMING ASC time
+    GROUP BY stocksymbol
 
-WITH nested(stocksymbol, weighted_moving_averages) AS (
- SELECT stocksymbol, avgs(10, price*quantity) / avgs(10, quantity) as weighted_moving_averages
- FROM trade
- ASSUMING ASC time
- GROUP BY stocksymbol
-)
-SELECT * FROM flatten(nested)
-INTO OUTFILE "query_c.csv"
-FIELDS TERMINATED BY ","
+CREATE TABLE query_c AS
+    SELECT stocksymbol, avgs(10, price*quantity) / avgs(10, quantity) as weighted_moving_averages
+    FROM trade
+    ASSUMING ASC time
+    GROUP BY stocksymbol
 
-SELECT stocksymbol, max(price - mins(price)) as best_profit
-FROM trade
-ASSUMING ASC time
-GROUP BY stocksymbol
-INTO OUTFILE "query_d.csv"
-FIELDS TERMINATED BY ","
+CREATE TABLE query_d AS
+    SELECT stocksymbol, max(price - mins(price)) as best_profit
+    FROM trade
+    ASSUMING ASC time
+    GROUP BY stocksymbol
 
-<q>\\</q>
+//<q>\c 100000 100000</q>
 
