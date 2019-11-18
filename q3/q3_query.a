@@ -1,0 +1,97 @@
+<q>
+
+/ Translate AQuery to q code:
+/ java -jar aquery.jar -a 1 -c -o q3_query.q q3_query.a
+/ or:
+/ a2q -a 1 -c -o q3_query.q q3_query.a
+
+/ Run and time the queries:
+/ time q q3_query.q
+
+</q>
+
+
+CREATE TABLE TFriends (person1 INT, person2 INT)
+CREATE TABLE TLike (person INT, artist INT)
+
+LOAD DATA INFILE "friends.csv"
+  INTO TABLE TFriends FIELDS TERMINATED BY ","
+
+LOAD DATA INFILE "like.csv"
+  INTO TABLE TLike FIELDS TERMINATED BY ","
+
+// This is just reinserting everything...
+INSERT INTO TFriends SELECT person2, person1 FROM TFriends
+
+
+// UFriends
+CREATE TABLE UFriends AS
+  SELECT person1, person2 FROM DISTINCT(TFriends)
+
+//SELECT * FROM UFriends
+//INTO OUTFILE "UFriends.csv"
+//FIELDS TERMINATED BY ","
+
+
+// ULike
+CREATE TABLE ULike AS SELECT * FROM DISTINCT(TLike)
+
+//SELECT * FROM ULike
+//INTO OUTFILE "ULike.csv"
+//FIELDS TERMINATED BY ","
+
+
+CREATE TABLE t1 AS SELECT person1, person2 as person FROM UFriends
+
+// temp1 [p1, p2 who likes a, a, 1]
+CREATE TABLE temp1 AS
+  SELECT t1.person1 as person1, t1.person as person2, ULike.artist as artist, 1 as dummy
+    FROM t1 INNER JOIN ULike USING person
+
+//SELECT * FROM temp1
+//INTO OUTFILE "temp1.csv"
+//FIELDS TERMINATED BY ","
+
+
+// temp2 [p1 who has a friend who likes a, a]
+CREATE TABLE temp2 AS SELECT DISTINCT person1, artist FROM temp1
+
+//SELECT * FROM temp2
+//INTO OUTFILE "temp2.csv"
+//FIELDS TERMINATED BY ","
+
+
+CREATE TABLE tempULike AS SELECT person as person1, artist FROM ULike
+
+// temp3 [p1 who doesn't like a but has a friend who likes a, a]
+<q>
+`temp3 set temp2 except tempULike
+</q>
+
+//SELECT * FROM temp3
+//INTO OUTFILE "temp3.csv"
+//FIELDS TERMINATED BY ","
+
+
+// temp4 [p1 who doesn't like a but has a friend who likes a, a, 1]
+CREATE TABLE temp4 AS
+  SELECT person1, artist, 1 as dummy FROM temp3
+
+//SELECT * FROM temp4
+//INTO OUTFILE "temp4.csv"
+//FIELDS TERMINATED BY ","
+
+
+// result [p1 who doesn't like a, p2 who likes a and is p1's friend, a]
+CREATE TABLE result AS
+  SELECT person1, person2, artist
+    FROM temp1 INNER JOIN temp4 USING (person1, artist)
+
+// Generate output to a file
+SELECT * FROM result
+INTO OUTFILE "result.csv"
+FIELDS TERMINATED BY ","
+
+// Quit when finished
+<q>\\</q>
+
