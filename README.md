@@ -151,11 +151,11 @@ SELECT stocksymbol, time, quantity, price FROM trade;
 
 According to the above results, we found that a query without using Distinct method can drastically reduce time for the both data distribution. (be applied to both MySQL and KDB)
 
-However, we noticed that the ratio between Distinct and without Distinct for MySQL was , and the ratio for AQuery was 177, thus, we can tell that KDB will have a more significant performance enhancemence without using Distinct. Maybe KDB is not so good at doing some actions like distinct as at doing normal actions like queries and updates. Besides, because the KDB is a column oriented database, it's more difficult for KDB to do distinct actions. The distinct actions, especially for multi-columns comparison, is not the strong point of KDB, so it will take much more time than doing no-distinct actions.
+However, we noticed that the ratio between Distinct and without Distinct for MySQL was , and the ratio for AQuery was 177, thus, we can tell that KDB will have a more significant performance enhancement without using Distinct. Moreover, since we found that KDB is a column oriented database system, therefore it's harder for KDB to perform Distinct method, and will be slower than performing without Distinct method.
 
 At last, we can adjust the statement more precisely as follows:
 
-It would be better to remove unnecessary Distict, since Distinct will significantly slow down the speed of a query, especially is applied to KDB, and avoid to use Distinct on multi-columns action while using KDB.
+It would be better to remove unnecessary Distict, since Distinct will significantly slow down the speed of a query, especially is applied to KDB, and avoid to use Distinct method on multi-columns action while using KDB.
 
 <br/>
 
