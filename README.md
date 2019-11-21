@@ -49,6 +49,7 @@
   ```
 
 <br/>
+
 ## Question 2
 
 ### The two rule of thumbs
@@ -91,6 +92,7 @@
 The query codes we used were attached in the q2_query.a file.
 
 <br/>
+
 ### 1). Eliminate unnecessary DISTINCT
 
 The original query code used DISTINCT method as follows:
@@ -109,6 +111,8 @@ SELECT stocksymbol, time, quantity, price FROM trade;
 ```
 
 From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
+
+<br/>
 
 ### 2). Leverage covering indexes
 
@@ -139,6 +143,7 @@ SELECT price, stocksymbol FROM trade WHERE price > 400;
 From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
 <br/>
+
 ## Question 3
 
 ### Run the query
