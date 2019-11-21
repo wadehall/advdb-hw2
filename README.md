@@ -10,7 +10,7 @@ Team members:
 ### Generate data
 
 - Run `trade_gen.py` to generate data which will be stored in `trade.csv`.
-- It takes me ~18min to generate 10,000,000 records on my laptop.
+- It takes me ~18min to generate 10,000,000 records on my MacBook Pro.
 
 ### Run the queries
 
@@ -27,26 +27,54 @@ Team members:
   ```
   This will generate `trade_query.q`.
 - Run the queries:
-  `bash q trade_query.q`
+  ```bash 
+  q trade_query.q
+  ```
   You will get the following output in kdb+:
-  `` `trade `trade `query_a `query_b `query_c `query_d q) ``
+  ``` 
+  `trade
+  `trade
+  `query_a
+  `:query_a.csv
+  `query_b
+  `:query_b.csv
+  `query_c
+  `:query_c.csv
+  `query_d
+  `:query_d.csv
+  q)
+  ```
   Results of the four queries are stored in tables `` `query_a ``,
   `` `query_b ``, `` `query_c ``, and `` `query_d ``, respectively.
+  Each table is also saved into a `csv` file.
 
   The prompt `q)` in the end means you are still in a q console session.
 
-- Type the name of each table to show its content:
-
-  ```
-  q)query_a
-  ...
-  q)query_b
-  ...
-  q)query_c
-  ...
-  q)query_d
-  ...
-  ```
+- To show the content of the query results, you can: 
+    - show table in kdb+: ([kdb+ will truncate the display in height and width.
+      You can set the size of the display using `\c` command.](https://code.kx.com/q4m3/13_Commands_and_System_Variables/#1314-console-c))
+      ```
+      q)query_a
+      ...
+      q)query_b
+      ...
+      q)query_c
+      ...
+      q)query_d
+      ...
+      ```
+    - exit the q session with `\\`, then view the `csv` files: [suggested]
+      ```
+      q)\\
+      $ cat query_a.csv
+      ...
+      $ cat query_b.csv
+      ...
+      $ cat query_c.csv
+      ...
+      $ cat query_d.csv
+      ...
+      ```
 
 ## Question 2
 

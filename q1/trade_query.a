@@ -20,28 +20,58 @@ LOAD DATA INFILE "trade.csv"
 INTO TABLE trade
 FIELDS TERMINATED BY ","
 
+
+//////////////// query_a ////////////////
 CREATE TABLE query_a AS
     SELECT stocksymbol, sum(quantity * price) / sum(quantity) as weighted_average
     FROM trade
     GROUP BY stocksymbol
 
+// save to file
+<q>save `query_a.csv</q>
+
+
+//////////////// query_b ////////////////
 CREATE TABLE query_b AS
     SELECT stocksymbol, avgs(10, price) as unweighted_moving_averages
     FROM trade
     ASSUMING ASC time
     GROUP BY stocksymbol
 
+// convert list of floats to string
+// and save to file
+<q>
+query_b: update " " sv/: string each unweighted_moving_averages from query_b
+save `query_b.csv
+</q>
+
+
+//////////////// query_c ////////////////
 CREATE TABLE query_c AS
     SELECT stocksymbol, avgs(10, price*quantity) / avgs(10, quantity) as weighted_moving_averages
     FROM trade
     ASSUMING ASC time
     GROUP BY stocksymbol
 
+// convert list of floats to string
+// and save to file
+<q>
+query_c: update " " sv/: string each weighted_moving_averages from query_c
+save `query_c.csv
+</q>
+
+
+//////////////// query_d ////////////////
 CREATE TABLE query_d AS
     SELECT stocksymbol, max(price - mins(price)) as best_profit
     FROM trade
     ASSUMING ASC time
     GROUP BY stocksymbol
+
+// save to file
+<q>save `query_d.csv</q>
+
+
 
 //<q>\c 100000 100000</q>
 
