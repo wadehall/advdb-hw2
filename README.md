@@ -186,8 +186,14 @@ From the result above, ... TO-DO (Analyze the averge time of two systems with tw
   This will generate `q3_query.q`.
 - Run and time the queries:
   ```bash
-  time q q3_query.q
+  q q3_query.q
   ```
-- The output will go to `result.csv`.
-- If you don't want to generate the output to a file, comment out the last few
-  lines in `q3_query.a`.
+  **The start time and finish time will be printed at the beginning and the end of
+  the query, respectively. Subtract them to calculate the time it took to execute
+  the query.**
+  
+  As shown in the example below, the query is executed in less than 11 seconds
+  on the `crackle1.cims.nyu.edu` machine:
+  ![q3_screenshot_cims](q3/q3_screenshot_cims.png)
+- The result of the query is stored in table `result`.
+  The table is also saved to a file named `result.csv`.
