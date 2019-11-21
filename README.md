@@ -60,7 +60,7 @@ See `q1/trade_query.a`.
   The prompt `q)` in the end means you are still in a q console session.
 
 - To show the content of the query results, you can:
-  - show table in kdb+: ([kdb+ will truncate the display in height and width.
+  - Show table in kdb+: ([kdb+ will truncate the display in height and width.
     You can set the size of the display using `\c` command.](https://code.kx.com/q4m3/13_Commands_and_System_Variables/#1314-console-c))
     ```
     q)query_a
@@ -72,7 +72,7 @@ See `q1/trade_query.a`.
     q)query_d
     ...
     ```
-  - exit the q session with `\\`, then view the `csv` files: [suggested]
+  - Exit the q session with `\\`, then view the `csv` files: [suggested]
     ```
     q)\\
     $ cat query_a.csv
