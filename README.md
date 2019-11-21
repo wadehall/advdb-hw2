@@ -149,8 +149,6 @@ Thus, we can remove the unneeded DISTINCT method and still get the same results 
 SELECT stocksymbol, time, quantity, price FROM trade;
 ```
 
-From the result above, we can notice that the time of the queries without distinct were extremely shorter than the queries with distincts for both of the distribution patterns (KDB and PostgreSQL).
-
 According to the above results, we found that a query without using Distinct method can drastically reduce time for the both data distribution. (be applied to both MySQL and KDB)
 
 However, the ratio of distinct and no-distinct time for KDB was ＿_, and the ratio for PostgreSQL was _＿, so we can find that without distinct can have a larger performance increase for KDB. Maybe KDB is not so good at doing some actions like distinct as at doing normal actions like queries and updates. Besides, because the KDB is a column oriented database, it's more difficult for KDB to do distinct actions. The distinct actions, especially for multi-columns comparison, is not the strong point of KDB, so it will take much more time than doing no-distinct actions.
@@ -188,6 +186,7 @@ SELECT price, stocksymbol FROM trade WHERE price > 400;
 ```
 
 <br/>
+
 In the result table, we can find that MySQL and KDB with covering index both had better performance than without a covering index. And their decrease ratios indicated that both of them are likely to satisfy this rule of thumb. The reason of the increase of performance may be that adding a covering index will enable the database to satisfy all requested columns in a query without performing a further lookup into the clustered index.
 
 To make the statement more precisely, we can modify like this:
