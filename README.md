@@ -104,7 +104,7 @@ SELECT DISTINCT stocksymbol, time, quantity, price FROM trade;
 ```
 
 <br/>
-Firstly, we got the unique records with **_stock symbol, time, qunatity_** and **_price_** atrributes by using DISTINCT method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the **_time_** attribute which always produces an unique value.
+Firstly, we got the unique records with ***stock symbol, time, qunatity*** and ***price*** atrributes by using DISTINCT method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the ***time*** attribute which always produces an unique value.
 
 Thus, we can remove the unneeded DISTINCT method and still get the same results through below query:
 
@@ -135,7 +135,7 @@ TO-DO
 <br/>
 We followed the instruction from book, and made an index on (price, stocksymbol) contains the required data field and eliminates the need to look up the record. It not only avoids accessing the table to evaluate the where clause, but avoids accessing the table completely if the database can find the selected columns in the index itself.
 
-If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make **_price_** column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
+If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make ***price*** column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
 
 ```
 SELECT price, stocksymbol FROM trade WHERE price > 400;
