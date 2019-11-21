@@ -5,6 +5,8 @@
 - Zheng Jiang, Net ID: zj688
 - Shih-Yao Chou, Net ID: syc574
 
+<br/>
+
 ## Question 1
 
 ### Generate data
@@ -142,6 +144,7 @@ SELECT price, stocksymbol FROM trade WHERE price > 400;
 <br/>
 From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
+<br/>
 <br/>
 
 ## Question 3
