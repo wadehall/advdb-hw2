@@ -187,11 +187,11 @@ SELECT price, stocksymbol FROM trade WHERE price > 400;
 
 <br/>
 
-In the result table, we can find that MySQL and KDB with covering index both had better performance than without a covering index. And their decrease ratios indicated that both of them are likely to satisfy this rule of thumb. The reason of the increase of performance may be that adding a covering index will enable the database to satisfy all requested columns in a query without performing a further lookup into the clustered index.
+According to the above results, we noticed that MySQL and KDB with covering index can both improve their query performance significantly. And this conclusion are applied to both data distributions. This is because having a covering index can help a query to get the requested columns in the index without conducting a further lookup into the clustered index.
 
-To make the statement more precisely, we can modify like this:
+Therefore, we can adjust the statement as follows:
 
-If some of the columns will be queried frequently, it's better to create a covering index on these columns to improve the query performance.
+It would be better to leverage a covering index on the columns that we will query frequently to improve performance significantly.
 
 <br/>
 <br/>
