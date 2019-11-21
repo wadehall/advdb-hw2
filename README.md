@@ -1,6 +1,6 @@
 # Advanced Database Systems - Homework 2
 
-Team members:
+### Team members:
 
 - Zheng Jiang, Net ID: zj688
 - Shih-Yao Chou, Net ID: syc574
@@ -48,6 +48,7 @@ Team members:
   ...
   ```
 
+<br/>
 ## Question 2
 
 ### The two rule of thumbs
@@ -90,7 +91,6 @@ Team members:
 The query codes we used were attached in the q2_query.a file.
 
 <br/>
-
 ### 1). Eliminate unnecessary DISTINCT
 
 The original query code used DISTINCT method as follows:
@@ -138,6 +138,7 @@ SELECT price, stocksymbol FROM trade WHERE price > 400;
 <br/>
 From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
+<br/>
 ## Question 3
 
 ### Run the query
