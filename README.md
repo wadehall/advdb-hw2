@@ -113,10 +113,10 @@ See `q1/trade_query.a`.
 
 |                        | Uniform Distribution | Fractal Distribution |
 | ---------------------- | -------------------- | -------------------- |
-| With Distinct          |                      |                      |
-| Without Distinct       |                      |                      |
-| With Covering Index    |                      |                      |
-| Without Covering Index |                      |                      |
+| With Distinct          | 147531ms             | 150073ms             |
+| Without Distinct       | 20812ms              | 20938ms              |
+| With Covering Index    | 8697ms               | 8889ms               |
+| Without Covering Index | 9771ms               | 9879ms               |
 
 2. AQuery
 
