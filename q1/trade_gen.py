@@ -7,13 +7,13 @@ import os
 
 COLUMN_NAMES = ['stocksymbol', 'time', 'quantity', 'price']
 
-FILE_PATH = 'q1/trade.csv'
+FILE_PATH = 'trade.csv'
 NUM_RECORDS = 10000000
 NUM_STOCKSYMBOLS = 100000
 X = 70002
 
 # test
-# FILE_PATH = 'q1/trade_test.csv'
+# FILE_PATH = 'trade_test.csv'
 # NUM_RECORDS = 10000
 # NUM_STOCKSYMBOLS = 1000
 # X = 703

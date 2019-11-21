@@ -1,0 +1,79 @@
+Script started on Thu Nov 21 14:39:18 2019
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+[?1034hbash-3.2$ a2q -a 1 -c -o q2_query.q q2_query.a
+bash-3.2$ q q2_query.q
+KDB+ 3.6 2019.09.19 Copyright (C) 1993-2019 Kx Systems
+m64/ 8(16)core 16384MB JZ jiangzhengs-macbook-pro.local 127.0.0.1 EXPIRE 2020.11.07 zj688@nyu.edu KOD #4167697
+
+`trade_fractal
+`trade_fractal
+,"***************** Fractal *****************"
+,"******With Distinct:******"
+,"Time start:"
+2019.11.22D00:39:56.037190000
++`stocksymbol`time`quantity`price!(43072 59493 57373 57891 4222 24868 44994 3..
+,"Time finish:"
+2019.11.22D00:39:56.973723000
+,"**************************"
+,"*****Without Distinct:****"
+,"Time start:"
+2019.11.22D00:39:56.989053000
++`stocksymbol`time`quantity`price!(43072 59493 57373 57891 4222 24868 44994 3..
+,"Time finish:"
+2019.11.22D00:39:56.993662000
+,"**************************"
+,"******Without Covering Index******"
+,"Time start:"
+2019.11.22D00:39:57.005360000
++(,`stocksymbol)!,43072 57373 57891 4222 24868 44994 36814 14970 54170 48472 ..
+,"Time finish:"
+2019.11.22D00:39:57.194396000
+,"**************************"
+`trade_fractal
+,"*****With Covering Index****"
+,"Time start:"
+2019.11.22D00:39:57.207713000
++(,`stocksymbol)!,43072 57373 57891 4222 24868 44994 36814 14970 54170 48472 ..
+,"Time finish:"
+2019.11.22D00:39:57.321578000
+,"**************************"
+`trade_uniform
+`trade_uniform
+,"***************** Uniform *****************"
+,"******With Distinct:******"
+,"Time start:"
+2019.11.22D00:39:59.400497000
++`stocksymbol`time`quantity`price!(3888 14907 36282 42290 35372 437 35409 641..
+,"Time finish:"
+2019.11.22D00:40:00.275936000
+,"**************************"
+,"*****Without Distinct:****"
+,"Time start:"
+2019.11.22D00:40:00.291119000
++`stocksymbol`time`quantity`price!(3888 14907 36282 42290 35372 437 35409 641..
+,"Time finish:"
+2019.11.22D00:40:00.295768000
+,"**************************"
+,"******Without Covering Index******"
+,"Time start:"
+2019.11.22D00:40:00.308900000
++(,`stocksymbol)!,3888 14907 36282 42290 35372 437 35409 64174 23795 7398 245..
+,"Time finish:"
+2019.11.22D00:40:00.498482000
+,"**************************"
+`trade_uniform
+,"*****With Covering Index****"
+,"Time start:"
+2019.11.22D00:40:00.510317000
++(,`stocksymbol)!,3888 14907 36282 42290 35372 437 35409 64174 23795 7398 245..
+,"Time finish:"
+2019.11.22D00:40:00.623293000
+,"**************************"
+q)\\
+bash-3.2$ exit
+exit
+
+Script done on Thu Nov 21 14:40:05 2019
