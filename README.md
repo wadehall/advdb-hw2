@@ -100,7 +100,7 @@ See `q1/trade_query.a`.
 ### The two database systems
 
 1. MySQL
-2. KDB
+2. AQuery (KDB)
 
 ### The two data distributions
 
@@ -118,7 +118,7 @@ See `q1/trade_query.a`.
 | With Covering Index    |                      |                      |
 | Without Covering Index |                      |                      |
 
-2. KDB
+2. AQuery
 
 |                        | Uniform Distribution | Fractal Distribution |
 | ---------------------- | -------------------- | -------------------- |
@@ -151,7 +151,7 @@ SELECT stocksymbol, time, quantity, price FROM trade;
 
 According to the above results, we found that a query without using Distinct method can drastically reduce time for the both data distribution. (be applied to both MySQL and KDB)
 
-However, the ratio of distinct and no-distinct time for MySQL was , and the ratio for KDB was 177, so we can find that without distinct can have a larger performance increase for KDB. Maybe KDB is not so good at doing some actions like distinct as at doing normal actions like queries and updates. Besides, because the KDB is a column oriented database, it's more difficult for KDB to do distinct actions. The distinct actions, especially for multi-columns comparison, is not the strong point of KDB, so it will take much more time than doing no-distinct actions.
+However, the ratio of distinct and no-distinct time for MySQL was , and the ratio for AQuery was 177, so we can find that without distinct can have a larger performance increase for KDB. Maybe KDB is not so good at doing some actions like distinct as at doing normal actions like queries and updates. Besides, because the KDB is a column oriented database, it's more difficult for KDB to do distinct actions. The distinct actions, especially for multi-columns comparison, is not the strong point of KDB, so it will take much more time than doing no-distinct actions.
 
 At last, we can adjust the statement more precisely as follows:
 
@@ -187,7 +187,7 @@ SELECT stocksymbol FROM trade WHERE price > 100;
 
 <br/>
 
-According to the above results, we noticed that MySQL and KDB with covering index can both improve their query performance significantly. And this conclusion are applied to both data distributions. This is because having a covering index can let a query get the requested columns from the index without conducting a further lookup into the clustered index.
+According to the above results, we noticed that MySQL and AQuery with covering index can both improve their query performance significantly. And this conclusion are applied to both data distributions, but the extend of peformance improvement of the Fractal distribution will depend of the condition in WHERE clause. This is because having a covering index can let a query get the requested columns from the index without conducting a further lookup into the clustered index.
 
 Therefore, we can adjust the statement as follows:
 
