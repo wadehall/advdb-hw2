@@ -53,7 +53,9 @@ Team members:
 ### The two rule of thumbs used here
 
 1. Eliminate unneeded DISTINCTs
+
 2. Leverage covering indexes
+   A covering index is a special case where the index itself contains the required data field(s) and can answer the required data.
 
 ### The two database systems used here
 
@@ -89,25 +91,47 @@ The query codes we used were attached in the q2_query.a file.
 
 ### 1). Eliminate unneeded DISTINCTs
 
-The original query codes with using distinct is as follows:
+The original query code used DISTINCT method as follows:
 
 ```
 SELECT DISTINCT stocksymbol, time, quantity, price FROM trade;
 ```
 
-Firstly, we got the unique records with _stock symbol, time, qunatity and price_ atrributes by using DISTINCT SQL method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the _time_ attribute which always produces unique value.
+Firstly, we got the unique records with \*\*\*stock symbol, time, qunatity\*\*\* and \*\*\*price\*\*\* atrributes by using DISTINCT method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the \_time\* attribute which always produces an unique value.
 
-Thus, we can remove the unneeded DISTINCT method and get the same results through below query:
+Thus, we can remove the unneeded DISTINCT method and still get the same results through below query:
 
 ```
 SELECT stocksymbol, time, quantity, price FROM trade;
 ```
 
-TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
+From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
 ### 2). Leverage covering indexes
 
-From the result above, ... (Analyze the averge time of two systems with two data distribution for this rule of thumb)
+The way to create a covering index is as follows:
+
+- MySQL:
+
+```
+CREATE INDEX price_stocksymbol ON trade (price, stocksymbol);
+```
+
+- KDB:
+
+```
+TO-DO
+```
+
+We followed the instruction from book, and made an index on (price, stocksymbol) contains the required data field and eliminates the need to look up the record. It not only avoids accessing the table to evaluate the where clause, but avoids accessing the table completely if the database can find the selected columns in the index itself.
+
+If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make price column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
+
+```
+SELECT price, stocksymbol FROM trade WHERE price > 400;
+```
+
+From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
 ## Question 3
 
