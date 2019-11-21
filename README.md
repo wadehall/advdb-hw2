@@ -15,6 +15,7 @@
 - It takes me ~18min to generate 10,000,000 records on my MacBook Pro.
 
 ### Our queries using AQuery
+
 See `q1/trade_query.a`.
 
 ### Run the queries
@@ -148,7 +149,13 @@ Thus, we can remove the unneeded DISTINCT method and still get the same results 
 SELECT stocksymbol, time, quantity, price FROM trade;
 ```
 
-From the result above, ... TO-DO (Analyze the average time of two systems with two data distribution for this rule of thumb)
+According to the above results, we found that a query without using Distinct method can drastically reduce time for the both data distribution. (be applied to both MySQL and KDB)
+
+However, the ratio of distinct and no-distinct time for KDB was ＿_, and the ratio for PostgreSQL was _＿, so we can find that without distinct can have a larger performance increase for KDB. Maybe KDB is not so good at doing some actions like distinct as at doing normal actions like queries and updates. Besides, because the KDB is a column oriented database, it's more difficult for KDB to do distinct actions. The distinct actions, especially for multi-columns comparison, is not the strong point of KDB, so it will take much more time than doing no-distinct actions.
+
+At last, we can adjust the statement more precisely as follows:
+
+It would be better to remove unnecessary Distict, since Distinct will significantly slow down the speed of a query, especially is applied to KDB, and avoid to use Distinct on multi-columns action while using KDB.
 
 <br/>
 
@@ -179,7 +186,12 @@ SELECT stocksymbol FROM trade WHERE price > 100;
 ```
 
 <br/>
-From the result above, ... TO-DO (Analyze the average time of two systems with two data distribution for this rule of thumb)
+
+In the result table, we can find that MySQL and KDB with covering index both had better performance than without a covering index. And their decrease ratios indicated that both of them are likely to satisfy this rule of thumb. The reason of the increase of performance may be that adding a covering index will enable the database to satisfy all requested columns in a query without performing a further lookup into the clustered index.
+
+To make the statement more precisely, we can modify like this:
+
+If some of the columns will be queried frequently, it's better to create a covering index on these columns to improve the query performance.
 
 <br/>
 <br/>
@@ -187,6 +199,7 @@ From the result above, ... TO-DO (Analyze the average time of two systems with t
 ## Question 3
 
 ### Our query using AQuery and q
+
 See `q3/q3_query.a`.
 
 ### Run the query
