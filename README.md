@@ -14,6 +14,9 @@
 - Run `trade_gen.py` to generate data which will be stored in `trade.csv`.
 - It takes me ~18min to generate 10,000,000 records on my MacBook Pro.
 
+### Our queries using AQuery
+See `q1/trade_query.a`.
+
 ### Run the queries
 
 - Make sure you have installed `q`, `sbt`, and `java`
@@ -177,6 +180,9 @@ From the result above, ... TO-DO (Analyze the averge time of two systems with tw
 
 ## Question 3
 
+### Our query using AQuery and q
+See `q3/q3_query.a`.
+
 ### Run the query
 
 - Make sure the input data files are named `friends.csv` and `like.csv`
@@ -200,8 +206,8 @@ From the result above, ... TO-DO (Analyze the averge time of two systems with tw
   the query, respectively. Subtract them to calculate the time it took to execute
   the query.**
   
-  As shown in the example below, the query is executed in less than 11 seconds
-  on the `crackle1.cims.nyu.edu` machine:
+  **As shown in the example below, the query is executed in less than 11 seconds
+  on the `crackle1.cims.nyu.edu` machine:**
   ![q3_screenshot_cims](q3/q3_screenshot_cims.png)
 - The result of the query is stored in table `result`.
   The table is also saved to a file named `result.csv`.
