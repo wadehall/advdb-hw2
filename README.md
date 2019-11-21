@@ -122,10 +122,10 @@ See `q1/trade_query.a`.
 
 |                        | Uniform Distribution | Fractal Distribution |
 | ---------------------- | -------------------- | -------------------- |
-| With Distinct          |       885ms          |       1222ms         |
-| Without Distinct       |       5ms            |       6ms            |
-| With Covering Index    |       152ms          |       143ms          |
-| Without Covering Index |       208ms          |       214ms          |
+| With Distinct          | 885ms                | 1222ms               |
+| Without Distinct       | 5ms                  | 6ms                  |
+| With Covering Index    | 152ms                | 143ms                |
+| Without Covering Index | 208ms                | 214ms                |
 
 The query code we used are attached in `q2_query.a`.
 
@@ -187,11 +187,11 @@ SELECT stocksymbol FROM trade WHERE price > 100;
 
 <br/>
 
-According to the above results, we noticed that MySQL and KDB with covering index can both improve their query performance significantly. And this conclusion are applied to both data distributions. This is because having a covering index can help a query to get the requested columns in the index without conducting a further lookup into the clustered index.
+According to the above results, we noticed that MySQL and KDB with covering index can both improve their query performance significantly. And this conclusion are applied to both data distributions. This is because having a covering index can let a query get the requested columns from the index without conducting a further lookup into the clustered index.
 
 Therefore, we can adjust the statement as follows:
 
-It would be better to leverage a covering index on the columns that we will query frequently to improve performance significantly.
+It would be better to leverage a covering index on the columns that we will query frequently so that we can improve performance significantly.
 
 <br/>
 <br/>
