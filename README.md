@@ -63,7 +63,7 @@ Team members:
 ### The two data distributions used here
 
 1. Uniform distribution
-2. Fractal distribution (we used the trades data generated from problem 1)
+2. Fractal distribution (we used the trades data generated from Question 1)
 
 ### The average time of the results
 
@@ -89,11 +89,25 @@ The query codes we used were attached in the q2_query.a file.
 
 ### 1). Eliminate unneeded DISTINCTs
 
-TO-DO
+The original query codes with using distinct is as follows:
+
+```
+SELECT DISTINCT stocksymbol, time, quantity, price FROM trade;
+```
+
+Firstly, we got the unique records with _stock symbol, time, qunatity and price_ atrributes by using DISTINCT SQL method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the _time_ attribute which always produces unique value.
+
+Thus, we can remove the unneeded DISTINCT method and get the same results through below query:
+
+```
+SELECT stocksymbol, time, quantity, price FROM trade;
+```
+
+TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
 ### 2). Leverage covering indexes
 
-TO-DO
+From the result above, ... (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
 ## Question 3
 
