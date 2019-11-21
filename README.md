@@ -121,12 +121,12 @@ See `q1/trade_query.a`.
 
 |                        | Uniform Distribution | Fractal Distribution |
 | ---------------------- | -------------------- | -------------------- |
-| With Distinct          |                      |                      |
-| Without Distinct       |                      |                      |
-| With Covering Index    |                      |                      |
-| Without Covering Index |                      |                      |
+| With Distinct          |       885ms          |       1222ms         |
+| Without Distinct       |       5ms            |       6ms            |
+| With Covering Index    |       152ms          |       143ms          |
+| Without Covering Index |       208ms          |       214ms          |
 
-The query codes we used were attached in the q2_query.a file.
+The query code we used are attached in `q2_query.a`.
 
 <br/>
 
@@ -148,7 +148,7 @@ Thus, we can remove the unneeded DISTINCT method and still get the same results 
 SELECT stocksymbol, time, quantity, price FROM trade;
 ```
 
-From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
+From the result above, ... TO-DO (Analyze the average time of two systems with two data distribution for this rule of thumb)
 
 <br/>
 
@@ -165,7 +165,7 @@ CREATE INDEX price_stocksymbol ON trade (price, stocksymbol);
 - KDB:
 
 ```
-TO-DO
+`price`stocksymbol xkey `trade
 ```
 
 <br/>
@@ -175,11 +175,11 @@ We followed the instruction from book, and made an index on (price, stocksymbol)
 If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make _price_ column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
 
 ```
-SELECT price, stocksymbol FROM trade WHERE price > 400;
+SELECT stocksymbol FROM trade WHERE price > 100;
 ```
 
 <br/>
-From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
+From the result above, ... TO-DO (Analyze the average time of two systems with two data distribution for this rule of thumb)
 
 <br/>
 <br/>

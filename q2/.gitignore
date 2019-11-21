@@ -1,4 +1,8 @@
 /*
 !.git*
+!aquery.jar
 !create_covering_index.sql
 !q2_query.sql
+!q2_query.a
+!trade_gen_uniform.py
+!typescript_aquery

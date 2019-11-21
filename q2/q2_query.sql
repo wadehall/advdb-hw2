@@ -2,12 +2,12 @@
 SELECT DISTINCT stocksymbol, time, quantity, price
 FROM trade
 
-/* Eliminate uneeded Distinct */
+/* Eliminate unneeded Distinct */
 SELECT stocksymbol, time, quantity, price
 FROM trade
 
 
 /* Leveraging Covering Indexes */
-SELECT price, stocksymbol
+SELECT stocksymbol
 FROM trade
-WHERE price > 400
+WHERE price > 100
