@@ -50,19 +50,19 @@ Team members:
 
 ## Question 2
 
-### The two rule of thumbs used here
+### The two rule of thumbs
 
-1. Eliminate unnecessary DISTINCT method
+1. Eliminate unnecessary DISTINCT
 
-2. Leverage Covering Indexes method  
+2. Leverage covering indexes  
    A covering index is a special case where the index itself contains the required data field(s) and can answer the required data.
 
-### The two database systems used here
+### The two database systems
 
 1. MySQL
 2. KDB
 
-### The two data distributions used here
+### The two data distributions
 
 1. Uniform distribution
 2. Fractal distribution (we used the trades data generated from Question 1)
@@ -91,7 +91,7 @@ The query codes we used were attached in the q2_query.a file.
 
 &nbsp;
 
-### 1). Eliminate unnecessary DISTINCT method
+### 1). Eliminate unnecessary DISTINCT
 
 The original query code used DISTINCT method as follows:
 
@@ -111,7 +111,7 @@ SELECT stocksymbol, time, quantity, price FROM trade;
 &nbsp;
 From the result above, ... TO-DO (Analyze the averge time of two systems with two data distribution for this rule of thumb)
 
-### 2). Leverage Covering Indexes method
+### 2). Leverage covering indexes
 
 The way to create a covering index is as follows:
 
