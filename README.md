@@ -29,11 +29,14 @@
   ```
   This will generate `trade_query.q`.
 - Run the queries:
-  ```bash 
+
+  ```bash
   q trade_query.q
   ```
+
   You will get the following output in kdb+:
-  ``` 
+
+  ```
   `trade
   `trade
   `query_a
@@ -46,37 +49,38 @@
   `:query_d.csv
   q)
   ```
+
   Results of the four queries are stored in tables `` `query_a ``,
   `` `query_b ``, `` `query_c ``, and `` `query_d ``, respectively.
   Each table is also saved into a `csv` file.
 
   The prompt `q)` in the end means you are still in a q console session.
 
-- To show the content of the query results, you can: 
-    - show table in kdb+: ([kdb+ will truncate the display in height and width.
-      You can set the size of the display using `\c` command.](https://code.kx.com/q4m3/13_Commands_and_System_Variables/#1314-console-c))
-      ```
-      q)query_a
-      ...
-      q)query_b
-      ...
-      q)query_c
-      ...
-      q)query_d
-      ...
-      ```
-    - exit the q session with `\\`, then view the `csv` files: [suggested]
-      ```
-      q)\\
-      $ cat query_a.csv
-      ...
-      $ cat query_b.csv
-      ...
-      $ cat query_c.csv
-      ...
-      $ cat query_d.csv
-      ...
-      ```
+- To show the content of the query results, you can:
+  - show table in kdb+: ([kdb+ will truncate the display in height and width.
+    You can set the size of the display using `\c` command.](https://code.kx.com/q4m3/13_Commands_and_System_Variables/#1314-console-c))
+    ```
+    q)query_a
+    ...
+    q)query_b
+    ...
+    q)query_c
+    ...
+    q)query_d
+    ...
+    ```
+  - exit the q session with `\\`, then view the `csv` files: [suggested]
+    ```
+    q)\\
+    $ cat query_a.csv
+    ...
+    $ cat query_b.csv
+    ...
+    $ cat query_c.csv
+    ...
+    $ cat query_d.csv
+    ...
+    ```
 
 <br/>
 
@@ -132,7 +136,8 @@ SELECT DISTINCT stocksymbol, time, quantity, price FROM trade;
 ```
 
 <br/>
-Firstly, we got the unique records with ***stock symbol, time, qunatity*** and ***price*** atrributes by using DISTINCT method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the ***time*** attribute which always produces an unique value.
+
+Firstly, we got the unique records with _stock symbol_, _time_, _qunatity_ and _price_ atrributes by using DISTINCT method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the _time_ attribute which always produces an unique value.
 
 Thus, we can remove the unneeded DISTINCT method and still get the same results through below query:
 
@@ -161,9 +166,10 @@ TO-DO
 ```
 
 <br/>
+
 We followed the instruction from book, and made an index on (price, stocksymbol) contains the required data field and eliminates the need to look up the record. It not only avoids accessing the table to evaluate the where clause, but avoids accessing the table completely if the database can find the selected columns in the index itself.
 
-If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make ***price*** column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
+If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make _price_ column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
 
 ```
 SELECT price, stocksymbol FROM trade WHERE price > 400;
@@ -193,15 +199,18 @@ From the result above, ... TO-DO (Analyze the averge time of two systems with tw
   ```
   This will generate `q3_query.q`.
 - Run and time the queries:
+
   ```bash
   q q3_query.q
   ```
+
   **The start time and finish time will be printed at the beginning and the end of
   the query, respectively. Subtract them to calculate the time it took to execute
   the query.**
-  
+
   As shown in the example below, the query is executed in less than 11 seconds
   on the `crackle1.cims.nyu.edu` machine:
   ![q3_screenshot_cims](q3/q3_screenshot_cims.png)
+
 - The result of the query is stored in table `result`.
   The table is also saved to a file named `result.csv`.
