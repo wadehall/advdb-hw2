@@ -1,5 +1,10 @@
 # Advanced Database Systems - Homework 2
 
+Team members:
+
+- Zheng Jiang, Net ID: zj688
+- Shih-Yao Chou, Net ID: syc574
+
 ## Question 1
 
 ### Generate data
@@ -45,17 +50,17 @@
 
 ## Question 2
 
-### The two rules of thumbs
+### The two rule of thumbs used here
 
 1. Eliminate unneeded DISTINCTs
-2. Leveraging Covering Indexes
+2. Leverage covering indexes
 
-### The two database systems
+### The two database systems used here
 
 1. MySQL
 2. KDB
 
-### The two data distributions
+### The two data distributions used here
 
 1. Uniform distribution
 2. Fractal distribution (we used the trades data generated from problem 1)
@@ -64,21 +69,21 @@
 
 1. MySQL
 
-|             | Uniform | Fractal |
-| ----------- | ------- | ------- |
-| Distinct    |         |         |
-| No Distinct |         |         |
-| Covering    |         |         |
-| No Covering |         |         |
+|                        | Uniform Distribution | Fractal Distribution |
+| ---------------------- | -------------------- | -------------------- |
+| With Distinct          |                      |                      |
+| Without Distinct       |                      |                      |
+| With Covering Index    |                      |                      |
+| Without Covering Index |                      |                      |
 
 2. KDB
 
-|             | Uniform | Fractal |
-| ----------- | ------- | ------- |
-| Distinct    |         |         |
-| No Distinct |         |         |
-| Covering    |         |         |
-| No Covering |         |         |
+|                        | Uniform Distribution | Fractal Distribution |
+| ---------------------- | -------------------- | -------------------- |
+| With Distinct          |                      |                      |
+| Without Distinct       |                      |                      |
+| With Covering Index    |                      |                      |
+| Without Covering Index |                      |                      |
 
 The query codes we used were attached in the q2_query.a file.
 
@@ -86,7 +91,7 @@ The query codes we used were attached in the q2_query.a file.
 
 TO-DO
 
-### 2). Leveraging Covering Indexes
+### 2). Leverage covering indexes
 
 TO-DO
 
