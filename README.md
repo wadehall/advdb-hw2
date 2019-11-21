@@ -100,16 +100,20 @@ See `q1/trade_query.a`.
 ### The two database systems
 
 1. MySQL
-2. AQuery (KDB)
+2. AQuery (kdb+)
 
 ### The two data distributions
 
-1. Uniform distribution
-2. Fractal distribution (we used the trades data generated from Question 1)
+1. Uniform distribution 
+2. Fractal distribution 
 
-### The average time of the results
+We are using the `trade` table from Question 1. Since we've generated fractally
+distributed data in Question 1, we are reusing the data. We've also generated
+uniformly distributed `trade` data for comparison.
 
-1. MySQL
+### The execution time of the queries
+
+1. MySQL (`q2_query.sql`)
 
 |                        | Uniform Distribution | Fractal Distribution |
 | ---------------------- | -------------------- | -------------------- |
@@ -118,7 +122,7 @@ See `q1/trade_query.a`.
 | With Covering Index    | 8697ms               | 8889ms               |
 | Without Covering Index | 9771ms               | 9879ms               |
 
-2. AQuery
+2. AQuery (`q2_query.a`)
 
 |                        | Uniform Distribution | Fractal Distribution |
 | ---------------------- | -------------------- | -------------------- |
@@ -127,13 +131,11 @@ See `q1/trade_query.a`.
 | With Covering Index    | 152ms                | 143ms                |
 | Without Covering Index | 208ms                | 214ms                |
 
-The query code we used are attached in `q2_query.a`.
-
 <br/>
 
-### 1). Eliminate unnecessary DISTINCT
+### 1) Eliminate unnecessary DISTINCT
 
-The original query code used DISTINCT method as follows:
+The original query code useing DISTINCT is:
 
 ```
 SELECT DISTINCT stocksymbol, time, quantity, price FROM trade;
@@ -141,21 +143,24 @@ SELECT DISTINCT stocksymbol, time, quantity, price FROM trade;
 
 <br/>
 
-Firstly, we got the unique records with _stock symbol_, _time_, _qunatity_ and _price_ atrributes by using DISTINCT method. However, we noticed that it's unnecessary to have DISTINCT method since we've already selected the _time_ attribute which always produces an unique value.
-
-Thus, we can remove the unneeded DISTINCT method and still get the same results through below query:
+The above query will retrieve unique records with `stocksymbol`, `time`, `quantity`
+and `price` attributes by using DISTINCT method. However, we noticed that it's 
+unnecessary to have DISTINCT method since we've already selected the `time` 
+attribute which always has an unique value. Thus, we can remove the unneeded
+`DISTINCT` and still get the same results through the below query:
 
 ```
 SELECT stocksymbol, time, quantity, price FROM trade;
 ```
 
-According to the above results, we found that a query without using Distinct method can drastically reduce time for the both data distribution. (be applied to both MySQL and KDB)
+According to the above results, we find that a query without using `Distinct`
+can drastically reduce time for the both data distributions. (be applied to both MySQL and KDB)
 
-However, we noticed that the ratio between Distinct and without Distinct for MySQL was 7.09 and 7.17, and the ratio for AQuery was 177 and 203.67, thus, we can tell that KDB will have a more significant performance enhancement without using Distinct. Moreover, since we found that KDB is a column oriented database system, therefore it might cause KDB to be harder to perform Distinct method when doing multi-columns action, and will be much slower than performing without Distinct method.
+However, we notice that the ratio between `Distinct` and `Without Distinct` for MySQL is 7.09 and 7.17, 
+and the ratio for AQuery is 177 and 203.67, thus, we can tell that AQuery(kdb+) will have a more significant
+performance enhancement by removing unneeded `Distinct`.
 
-At last, we can adjust the statement more precisely as follows:
-
-It would be better to remove unnecessary Distict, since Distinct will significantly slow down the speed of a query, especially is applied to KDB, and avoid to use Distinct method on multi-columns action while using KDB.
+Moreover, Fractal Distribution may further worsen the performance with `Distinct` by a little bit than Uniform Distribution.
 
 <br/>
 
@@ -169,7 +174,7 @@ The way to create a covering index is as follows:
 CREATE INDEX price_stocksymbol ON trade (price, stocksymbol);
 ```
 
-- KDB:
+- AQuery (q in kdb+):
 
 ```
 `price`stocksymbol xkey `trade
@@ -179,7 +184,7 @@ CREATE INDEX price_stocksymbol ON trade (price, stocksymbol);
 
 We followed the instruction from book, and made an index on (price, stocksymbol) contains the required data field and eliminates the need to look up the record. It not only avoids accessing the table to evaluate the where clause, but avoids accessing the table completely if the database can find the selected columns in the index itself.
 
-If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make _price_ column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
+If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. However, MySQL cannot use the index to perform lookups if the columns do not form a leftmost prefix of the index. Thus, we make `price` column in the leftmost prefix of the index (as the above SQL command) to make the below query effective:
 
 ```
 SELECT stocksymbol FROM trade WHERE price > 100;
@@ -187,7 +192,7 @@ SELECT stocksymbol FROM trade WHERE price > 100;
 
 <br/>
 
-According to the above results, we noticed that MySQL and AQuery with covering index can both improve their query performance significantly. And this conclusion are applied to both data distributions, but the extent of performance improvement for the Fractal distribution may depend on the different condition in the WHERE clause. This is because having a covering index can let a query get the requested columns from the index without conducting a further lookup into the clustered index.
+According to the above results, we noticed that MySQL and AQuery with covering index can both improve their query performance. And this conclusion is applied to both data distributions, but the extent of performance improvement for the Fractal distribution may depend on the different condition in the WHERE clause. This is because having a covering index can let a query get the requested columns from the index without conducting a further lookup into the clustered index.
 
 Therefore, we can adjust the statement as follows:
 
