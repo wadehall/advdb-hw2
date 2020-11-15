@@ -1,66 +1,66 @@
 <q>
 / The start time
+\echo "-----------------------------------------"
 gtime .z.p
 \echo "---------------------------------------"
 </q>
 
-CREATE TABLE TLike (person INT, artist INT)
-CREATE TABLE TFriends (person1 INT, person2 INT)
-
-
-LOAD DATA INFILE "friends.csv"
-  INTO TABLE TFriends FIELDS TERMINATED BY ","
+CREATE TABLE TLike (user INT, artist INT)
+CREATE TABLE TFriends (user1 INT, user2 INT)
 
 LOAD DATA INFILE "like.csv"
   INTO TABLE TLike FIELDS TERMINATED BY ","
 
-INSERT INTO TFriends SELECT person2, person1 FROM TFriends
+LOAD DATA INFILE "friends.csv"
+  INTO TABLE TFriends FIELDS TERMINATED BY ","
 
-// UFriends
+INSERT INTO TFriends SELECT user2, user1 FROM TFriends
+
 CREATE TABLE UFriends AS
-  SELECT person1, person2 FROM DISTINCT(TFriends)
+  SELECT user1, user2 FROM DISTINCT(TFriends)
 
-// ULike
 CREATE TABLE ULike AS SELECT * FROM DISTINCT(TLike)
 
-CREATE TABLE t1 AS SELECT person1, person2 as person FROM UFriends
+CREATE TABLE t1 AS SELECT user1, user2 as user FROM UFriends
 
-// temp1 [p1, p2 who likes a, a, 1]
+// user1 and user2 who like artist, artist, 1 
 CREATE TABLE temp1 AS
-  SELECT t1.person1 as person1, t1.person as person2, ULike.artist as artist, 1 as dummy
-    FROM t1 INNER JOIN ULike USING person
+  SELECT t1.user1 as user1, t1.user as user2, ULike.artist as artist, 1 as dummy
+    FROM t1 INNER JOIN ULike USING user
 
 
-// temp2 [p1 who has a friend who likes a, a]
-CREATE TABLE temp2 AS SELECT DISTINCT person1, artist FROM temp1
+// user1's friend that likes artist, artist 
+CREATE TABLE temp2 AS SELECT DISTINCT user1, artist FROM temp1
 
+CREATE TABLE tempULike AS SELECT user as user1, artist FROM ULike
 
-CREATE TABLE tempULike AS SELECT person as person1, artist FROM ULike
-
-// temp3 [p1 who doesn't like a but has a friend who likes a, a]
+// user1 that does not like artist but
+// friend likes artist, artist
 <q>
 `temp3 set temp2 except tempULike
 </q>
 
-
-// temp4 [p1 who doesn't like a but has a friend who likes a, a, 1]
+// user1 that does not like artist
+// but user1's friend likes artist, artist, 1
 CREATE TABLE temp4 AS
-  SELECT person1, artist, 1 as dummy FROM temp3
+  SELECT user1, artist, 1 as dummy FROM temp3
 
 
-// result [p1 who doesn't like a, p2 who likes a and is p1's friend, a]
+// user1 that does not like artist
+// user2 that likes artist 
+// and user1's friend, artist
 CREATE TABLE result AS
-  SELECT person1, person2, artist
-    FROM temp1 INNER JOIN temp4 USING (person1, artist)
+  SELECT user1, user2, artist
+    FROM temp1 INNER JOIN temp4 USING (user1, artist)
 
 <q>
 / The ending time
 \echo "-----------------------------------"
 gtime .z.p
-\echo "Save the result to csv file..."
+\echo "-----------------------------------"
+\echo "result to csv file"
 </q>
 
-// Generate output to a file
 SELECT * FROM result
 INTO OUTFILE "result.csv"
 FIELDS TERMINATED BY ","
