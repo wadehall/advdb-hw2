@@ -5,39 +5,39 @@ gtime .z.p
 \echo "---------------------------------------"
 </q>
 
-CREATE TABLE TLike (user INT, artist INT)
-CREATE TABLE TFriends (user1 INT, user2 INT)
+CREATE TABLE TableLike (user INT, artist INT)
+CREATE TABLE TableFriends (user1 INT, user2 INT)
 
 LOAD DATA INFILE "like.csv"
-  INTO TABLE TLike FIELDS TERMINATED BY ","
+  INTO TABLE TableLike FIELDS TERMINATED BY ","
 
 LOAD DATA INFILE "friends.csv"
-  INTO TABLE TFriends FIELDS TERMINATED BY ","
+  INTO TABLE TableFriends FIELDS TERMINATED BY ","
 
-INSERT INTO TFriends SELECT user2, user1 FROM TFriends
+INSERT INTO TableFriends SELECT user2, user1 FROM TableFriends
 
-CREATE TABLE UFriends AS
-  SELECT user1, user2 FROM DISTINCT(TFriends)
+CREATE TABLE DistFriends AS
+  SELECT user1, user2 FROM DISTINCT(TableFriends)
 
-CREATE TABLE ULike AS SELECT * FROM DISTINCT(TLike)
+CREATE TABLE DistLike AS SELECT * FROM DISTINCT(TableLike)
 
-CREATE TABLE t1 AS SELECT user1, user2 as user FROM UFriends
+CREATE TABLE t1 AS SELECT user1, user2 as user FROM DistFriends
 
 // user1 and user2 who like artist, artist, 1 
 CREATE TABLE temp1 AS
-  SELECT t1.user1 as user1, t1.user as user2, ULike.artist as artist, 1 as dummy
-    FROM t1 INNER JOIN ULike USING user
+  SELECT t1.user1 as user1, t1.user as user2, DistLike.artist as artist, 1 as dummy
+    FROM t1 INNER JOIN DistLike USING user
 
 
 // user1's friend that likes artist, artist 
 CREATE TABLE temp2 AS SELECT DISTINCT user1, artist FROM temp1
 
-CREATE TABLE tempULike AS SELECT user as user1, artist FROM ULike
+CREATE TABLE tmpDistLike AS SELECT user as user1, artist FROM DistLike
 
 // user1 that does not like artist but
 // friend likes artist, artist
 <q>
-`temp3 set temp2 except tempULike
+`temp3 set temp2 except tmpDistLike
 </q>
 
 // user1 that does not like artist
