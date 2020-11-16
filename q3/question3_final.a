@@ -1,0 +1,70 @@
+<q>
+/ Start time
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+CREATE TABLE TableLike (person INT, artist INT)
+CREATE TABLE TableFriends (person1 INT, person2 INT)
+
+LOAD DATA INFILE "like.csv"
+  INTO TABLE TableLike FIELDS TERMINATED BY ","
+  
+LOAD DATA INFILE "friends.csv"
+  INTO TABLE TableFriends FIELDS TERMINATED BY ","
+
+INSERT INTO TableFriends SELECT person2, person1 FROM TableFriends
+
+CREATE TABLE DistFriends AS
+  SELECT person1, person2 FROM DISTINCT(TableFriends)
+
+CREATE TABLE DistLike AS SELECT * FROM DISTINCT(TableLike)
+
+CREATE TABLE t1 AS SELECT person1, person2 as person FROM DistFriends
+
+// user1 and user2 who like artist, artist, 1 
+CREATE TABLE temp1 AS
+  SELECT t1.person1 as person1, t1.person as person2, DistLike.artist as artist, 1 as dummy
+    FROM t1 INNER JOIN DistLike USING person
+
+
+// user1's friend that likes artist, artist 
+CREATE TABLE temp2 AS SELECT DISTINCT person1, artist FROM temp1
+
+
+CREATE TABLE tmpDistLike AS SELECT person as person1, artist FROM DistLike
+
+// user1 that does not like artist but
+// friend likes artist, artist
+<q>
+`temp3 set temp2 except tmpDistLike
+</q>
+
+
+// user1 that does not like artist
+// but user1's friend likes artist, artist, 1
+CREATE TABLE temp4 AS
+  SELECT person1, artist, 1 as dummy FROM temp3
+
+
+// user1 that does not like artist
+// user2 that likes artist 
+// and user1's friend, artist
+CREATE TABLE result AS
+  SELECT person1, person2, artist
+    FROM temp1 INNER JOIN temp4 USING (person1, artist)
+
+<q>
+/ Finish time
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+SELECT * FROM result
+INTO OUTFILE "answer.csv"
+FIELDS TERMINATED BY ","
+
+// Quit option
+// <q>\\</q>
