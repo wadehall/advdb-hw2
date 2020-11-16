@@ -14,16 +14,15 @@
 -- FIELDS TERMINATED BY ","
 -- IGNORE 1 LINES;
 
-/* Use Distinct */
+/* Distinct */
 SELECT DISTINCT stocksymbol, time, quantity, price
 FROM trade
 
-/* Eliminate unneeded Distinct */
+/* No Distinct */
 SELECT stocksymbol, time, quantity, price
 FROM trade
 
-
-/* Leveraging Covering Indexes */
+/* Covering Index */
 SELECT stocksymbol
 FROM trade
 WHERE price > 100
