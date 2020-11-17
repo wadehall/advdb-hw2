@@ -5,21 +5,21 @@ gtime .z.p
 \echo "-----------------------------------------"
 </q>
 
-CREATE TABLE TableLike (person INT, artist INT)
-CREATE TABLE TableFriends (person1 INT, person2 INT)
+CREATE TABLE TbLike (person INT, artist INT)
+CREATE TABLE TbFriends (person1 INT, person2 INT)
 
 LOAD DATA INFILE "like.csv"
-  INTO TABLE TableLike FIELDS TERMINATED BY ","
+  INTO TABLE TbLike FIELDS TERMINATED BY ","
   
 LOAD DATA INFILE "friends.csv"
-  INTO TABLE TableFriends FIELDS TERMINATED BY ","
+  INTO TABLE TbFriends FIELDS TERMINATED BY ","
 
-INSERT INTO TableFriends SELECT person2, person1 FROM TableFriends
+INSERT INTO TbFriends SELECT person2, person1 FROM TbFriends
 
 CREATE TABLE DistFriends AS
-  SELECT person1, person2 FROM DISTINCT(TableFriends)
+  SELECT person1, person2 FROM DISTINCT(TbFriends)
 
-CREATE TABLE DistLike AS SELECT * FROM DISTINCT(TableLike)
+CREATE TABLE DistLike AS SELECT * FROM DISTINCT(TbLike)
 
 CREATE TABLE t1 AS SELECT person1, person2 as person FROM DistFriends
 
