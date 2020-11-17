@@ -1,0 +1,134 @@
+CREATE TABLE trade_fractal (stocksymbol INT, time INT, quantity INT, price INT)
+
+LOAD DATA INFILE "trade_fractal.csv"
+INTO TABLE trade_fractal
+FIELDS TERMINATED BY ","
+
+<q>
+\echo "Fractal, With Distinct"
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+SELECT DISTINCT stocksymbol, time, quantity, price
+FROM trade_fractal
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+\echo "Fractal, Without Distinct"
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+SELECT stocksymbol, time, quantity, price
+FROM trade_fractal
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+<q>
+\echo "Fractal, No Covering Index"
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+SELECT count(stocksymbol)
+FROM trade_fractal
+WHERE stocksymbol > 100
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+`price`stocksymbol xkey `trade_fractal
+\echo "Fractal, Covering Index"
+\echo "-----------------------------------------"
+gtime .z.p
+</q>
+
+SELECT count(stocksymbol)
+FROM trade_fractal
+WHERE stocksymbol > 100
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+CREATE TABLE trade_uniform (stocksymbol INT, time INT, quantity INT, price INT)
+
+LOAD DATA INFILE "trade_uniform.csv"
+INTO TABLE trade_uniform
+FIELDS TERMINATED BY ","
+
+<q>
+\echo "-----------------------------------------"
+\echo "Uniform, With Distinct"
+\echo "-----------------------------------------"
+gtime .z.p
+</q>
+
+SELECT DISTINCT stocksymbol, time, quantity, price
+FROM trade_uniform
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+\echo "Uniform, Without Distinct"
+\echo "-----------------------------------------"
+gtime .z.p
+</q>
+
+SELECT stocksymbol, time, quantity, price
+FROM trade_uniform
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+
+<q>
+\echo "Uniform, No Covering Index"
+\echo "-----------------------------------------"
+gtime .z.p
+</q>
+
+SELECT count(stocksymbol)
+FROM trade_uniform
+WHERE stocksymbol > 100
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+`price`stocksymbol xkey `trade_uniform
+\echo "Uniform, With Covering Index"
+\echo "-----------------------------------------"
+gtime .z.p
+</q>
+
+SELECT count(stocksymbol)
+FROM trade_uniform
+WHERE stocksymbol > 100
+
+<q>
+\echo "-----------------------------------------"
+gtime .z.p
+\echo "-----------------------------------------"
+</q>
+
+
+// Quit option
+// <q>\\</q>
